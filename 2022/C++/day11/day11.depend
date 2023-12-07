@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1673797230 source:c:\users\block\onedrive\documents\coding\aoc\2022\c++\day11\part1.cpp
+	<iostream>
+	<queue>
+	<assert.h>
+	<sstream>
+	<string>
+
+1674813924 source:c:\users\block\onedrive\documents\coding\aoc\2022\c++\day11\part2.cpp
+	<iostream>
+	<queue>
+	<assert.h>
+	<sstream>
+	<string>
+
