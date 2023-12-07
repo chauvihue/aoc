@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-
 /*
     Basically:
 
@@ -9,12 +8,11 @@ using ll = long long;
     l1   l2   len
     ...
 
-    l1       corresponds to  l2
-    l1 + 1   corresponds to  l2 + 1
+    l2       corresponds to  l1
+    l2 + 1   corresponds to  l1 + 1
     ...
-    l1 + len corresponds to  l2 + len
+    l2 + len corresponds to  l1 + len
 */
-
 struct Range
 {
     ll l, r, delta;
@@ -72,20 +70,29 @@ namespace part2
         int pos = lowbound(l, maps[k]);
         for (int i = pos; i < maps[k].size() && l <= r; i++)
         {
+            ll d, rr;            
             if (l <= maps[k][i].r) // l is in a mapped range
             {
-                q.emplace(l, maps[k][i].r, k+1);
-                l = min(r, maps[k][i].r) + 1;
-            } else // l isnt mapped
+                d = maps[k][i].delta;
+                rr = min(r, maps[k][i].r); 
+            }
+            else // l isnt mapped
             {
-                
-            }   
+                d = 0;
+                rr = min(r, maps[k][i+1].r-1); 
+            }
+            q.emplace(l+d, rr+d, k+1);
+            l = rr + 1;
         }
     }
 
     void solve()
     {
-        for (int i = 0; i < 7; i++) {maps[i].emplace_back(-1, -1, 0); sort(maps[i].begin(), maps[i].end());}
+        for (int i = 0; i < 7; i++) 
+        {
+            maps[i].emplace_back(-1, -1, 0); maps[i].emplace_back(LLONG_MAX, LLONG_MAX, 0);
+            sort(maps[i].begin(), maps[i].end());
+        }
         queue<Range> q;
         for (int i = 0; i < seeds.size(); i += 2) q.emplace(seeds[i], seeds[i]+seeds[i+1]-1, 0);
         while (!q.empty())
@@ -93,17 +100,9 @@ namespace part2
             ll l = q.front().l, r = q.front().r; int k = q.front().delta; q.pop();
             process_range(q, l, r, k);
         }
-            // for (ll d = 0; d <= seeds[i+1]; d++)
-            // {
-            //     ll val = seeds[i]+d;
-            //     for (int j = 0; j < 7 && val >= 0; j++) val = convert(val, maps[j]);
-            //     if (val < 0) assert(false);
-            //     res = min(res, val);
-            // }
         cout << res << '\n';
     }   
 }
-
 
 int main()
 {
