@@ -68,10 +68,18 @@ namespace part2
 {
     void process_range(queue<Range> &q, ll l, ll r, int k) // map range [l, r] with map maps[k] 
     {
+        if (k == 7) {res = min(res, l); return;}
         int pos = lowbound(l, maps[k]);
-        for (int i = pos; i < maps[k].size() && maps[i].r <= r; i++)
+        for (int i = pos; i < maps[k].size() && l <= r; i++)
         {
-            
+            if (l <= maps[k][i].r) // l is in a mapped range
+            {
+                q.emplace(l, maps[k][i].r, k+1);
+                l = min(r, maps[k][i].r) + 1;
+            } else // l isnt mapped
+            {
+                
+            }   
         }
     }
 
