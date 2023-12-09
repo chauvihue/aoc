@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#define pqT priority_queue<Range, vector<Range>, comp>
 using namespace std;
 using ll = long long;
 /*
@@ -18,6 +19,11 @@ struct Range
     ll l, r, delta;
     Range(ll _l, ll _r, ll _d): l(_l), r(_r), delta(_d) {};
     bool operator < (const Range &p) {return l < p.l;}
+};
+
+struct comp
+{
+    bool operator() (const Range &a, const Range &b) {return a.delta == b.delta ? (a.l < b.l) : a.delta < b.delta;}
 };
 
 vector<ll> seeds;
@@ -64,7 +70,7 @@ namespace part1
 
 namespace part2
 {
-    void process_range(queue<Range> &q, ll l, ll r, int k) // map range [l, r] with map maps[k] 
+    void process_range(pqT &pq, ll l, ll r, int k) // map range [l, r] with map maps[k] 
     {
         if (k == 7) {res = min(res, l); return;}
         int pos = lowbound(l, maps[k]);
@@ -81,7 +87,7 @@ namespace part2
                 d = 0;
                 rr = min(r, maps[k][i+1].r-1); 
             }
-            q.emplace(l+d, rr+d, k+1);
+            pq.emplace(l+d, rr+d, k+1);
             l = rr + 1;
         }
     }
@@ -93,12 +99,14 @@ namespace part2
             maps[i].emplace_back(-1, -1, 0); maps[i].emplace_back(LLONG_MAX, LLONG_MAX, 0);
             sort(maps[i].begin(), maps[i].end());
         }
-        queue<Range> q;
-        for (int i = 0; i < seeds.size(); i += 2) q.emplace(seeds[i], seeds[i]+seeds[i+1]-1, 0);
-        while (!q.empty())
+        pqT pq;
+        for (int i = 0; i < seeds.size(); i += 2) pq.emplace(seeds[i], seeds[i]+seeds[i+1]-1, 0);
+        ll l, r, k;
+        while (!pq.empty())
         {
-            ll l = q.front().l, r = q.front().r; int k = q.front().delta; q.pop();
-            process_range(q, l, r, k);
+            if (l == pq.top().l && r == pq.top().r && k == pq.top().delta) {pq.pop(); continue;}
+            ll l = pq.top().l, r = pq.top().r; int k = pq.top().delta; pq.pop();
+            process_range(pq, l, r, k);
         }
         cout << res << '\n';
     }   

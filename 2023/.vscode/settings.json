@@ -18,6 +18,18 @@
         "ranges": "cpp",
         "stacktrace": "cpp",
         "valarray": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "forward_list": "cpp",
+        "string": "cpp",
+        "any": "cpp",
+        "random": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "barrier": "cpp",
+        "chrono": "cpp",
+        "latch": "cpp",
+        "limits": "cpp",
+        "semaphore": "cpp",
+        "algorithm": "cpp"
     }
 }
