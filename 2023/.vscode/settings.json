@@ -30,6 +30,7 @@
         "latch": "cpp",
         "limits": "cpp",
         "semaphore": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "system_error": "cpp"
     }
 }
