@@ -64,17 +64,18 @@ namespace part2 {
     }
        
     void display(int wait=0) {
-        system("cls");
+        string print; // clear screen
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++)
-                if (make_pair(i, j) == loopsrc) cout << BRED << reff[g[i][j]-'0'] << RESET;
-                else if (displayreff.find(g[i][j]) != string::npos) cout << BGREEN << reff[g[i][j]-'0'] << RESET;
-                else cout << g[i][j];
-            cout << '\n';
+                if (i == loopsrc.first && j == loopsrc.second) print += BRED + reff[g[i][j]-'0'] + RESET;
+                else if (displayreff.find(g[i][j]) != string::npos) print += BGREEN + reff[g[i][j]-'0'] + RESET;
+                else print += g[i][j];
+            print += '\n';
         }
+        system("cls");
+        cout << print << endl;
         // if (wait != 100) cout << BRED << "COMPLETED CYCLE #" << res << RESET << endl;
-        cout << flush;
-        Sleep(wait);
+        if (wait > 0) Sleep(wait);
     }
 
     void trace() {
